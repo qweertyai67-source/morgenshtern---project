@@ -201,6 +201,11 @@ export function ArtistExperience({ content }: { content: SiteContent }) {
       </header>
 
       <main inert={menuOpen}>
+      <aside className="demo-banner" aria-label="Демо сайта">
+        <div className="demo-banner-label"><strong>DEMO</strong><span>ARTIST DIGITAL PRODUCT</span></div>
+        <p>Пример сайта для артиста, бренда или музыкального проекта. <span className="demo-banner-credit">Developed by Velox</span></p>
+        <a href="#connect" onClick={() => track("Demo CTA Click", { location: "demo-banner" })}>Обсудить похожий проект <Arrow /></a>
+      </aside>
       <section className="hero" id="top" ref={heroRef}>
         <div className="noise" />
         <div className="hero-topline">
