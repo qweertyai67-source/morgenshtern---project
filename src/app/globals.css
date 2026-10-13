@@ -245,12 +245,13 @@ button { color: inherit; }
 
 .release-section {
   position: relative;
+  z-index: 1;
   min-height: 120vh;
   display: grid;
   grid-template-columns: 1fr 1fr;
   background: #718c91;
   color: var(--ink);
-  overflow: hidden;
+  overflow: visible;
 }
 .release-visual { min-height: 820px; position: relative; display: grid; place-items: center; background: linear-gradient(135deg, #9db7bb, #526b71); overflow: hidden; }
 .release-visual::before { content: ""; position: absolute; inset: 0; background: linear-gradient(105deg, transparent 48%, rgba(255,255,255,.25) 49%, transparent 50%), repeating-linear-gradient(0deg, rgba(0,0,0,.04) 0 1px, transparent 1px 5px); }
