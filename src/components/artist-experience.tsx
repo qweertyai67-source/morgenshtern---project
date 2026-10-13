@@ -62,6 +62,9 @@ type FormState = {
 
 export function ArtistExperience({ content }: { content: SiteContent }) {
   const heroRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
+  const navigationRef = useRef<HTMLElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [newsletter, setNewsletter] = useState<FormState>({ kind: "idle", text: "" });
   const [cityRequest, setCityRequest] = useState<FormState>({ kind: "idle", text: "" });
@@ -74,8 +77,47 @@ export function ArtistExperience({ content }: { content: SiteContent }) {
 
   useEffect(() => {
     document.body.classList.toggle("menu-open", menuOpen);
-    return () => document.body.classList.remove("menu-open");
+    if (!menuOpen) return;
+
+    const menuButton = menuButtonRef.current;
+    navigationRef.current?.querySelector<HTMLAnchorElement>("a")?.focus({ preventScroll: true });
+
+    function handleMenuKey(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setMenuOpen(false);
+      }
+      if (event.key !== "Tab") return;
+
+      const controls = Array.from(headerRef.current?.querySelectorAll<HTMLElement>("a, button") ?? [])
+        .filter((element) => element.getClientRects().length > 0);
+      const first = controls[0];
+      const last = controls[controls.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last?.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first?.focus();
+      }
+    }
+
+    document.addEventListener("keydown", handleMenuKey);
+    return () => {
+      document.body.classList.remove("menu-open");
+      document.removeEventListener("keydown", handleMenuKey);
+      if (menuButton?.getClientRects().length) menuButton.focus({ preventScroll: true });
+    };
   }, [menuOpen]);
+
+  useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 901px)");
+    const closeOnDesktop = () => {
+      if (desktop.matches) setMenuOpen(false);
+    };
+    desktop.addEventListener("change", closeOnDesktop);
+    return () => desktop.removeEventListener("change", closeOnDesktop);
+  }, []);
 
   async function submitNewsletter(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -139,12 +181,12 @@ export function ArtistExperience({ content }: { content: SiteContent }) {
   }
 
   return (
-    <main>
+    <>
       <motion.div className="scroll-progress" style={{ scaleX: progress }} />
 
-      <header className="site-header">
-        <a className="monogram" href="#top" aria-label="Наверх">M*</a>
-        <nav className={menuOpen ? "open" : ""} aria-label="Основная навигация">
+      <header className="site-header" ref={headerRef}>
+        <a className="monogram" href="#top" aria-label="Наверх" onClick={() => setMenuOpen(false)}>M*</a>
+        <nav id="site-navigation" ref={navigationRef} className={menuOpen ? "open" : ""} aria-label="Основная навигация">
           <a href="#music" onClick={() => setMenuOpen(false)}>Музыка</a>
           <a href="#live" onClick={() => setMenuOpen(false)}>Live</a>
           <a href="#story" onClick={() => setMenuOpen(false)}>История</a>
@@ -153,11 +195,12 @@ export function ArtistExperience({ content }: { content: SiteContent }) {
         <a className="header-ticket" href="https://morgenshtern.love/#tour-dates" target="_blank" rel="noreferrer" onClick={() => track("Ticket Click", { location: "header" })}>
           Tickets <Arrow />
         </a>
-        <button className="menu-button" type="button" aria-expanded={menuOpen} aria-label="Открыть меню" onClick={() => setMenuOpen((value) => !value)}>
-          <span /><span />
+        <button ref={menuButtonRef} className="menu-button" type="button" aria-controls="site-navigation" aria-expanded={menuOpen} aria-label={menuOpen ? "Закрыть меню" : "Открыть меню"} onClick={() => setMenuOpen((value) => !value)}>
+          <span aria-hidden="true" /><span aria-hidden="true" />
         </button>
       </header>
 
+      <main inert={menuOpen}>
       <section className="hero" id="top" ref={heroRef}>
         <div className="noise" />
         <div className="hero-topline">
@@ -363,6 +406,7 @@ export function ArtistExperience({ content }: { content: SiteContent }) {
           <span>Независимый некоммерческий прототип. Не является официальным сайтом артиста.</span>
         </div>
       </footer>
-    </main>
+      </main>
+    </>
   );
 }
