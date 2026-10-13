@@ -217,7 +217,6 @@ export function ArtistExperience({ content }: { content: SiteContent }) {
             <span>MORGEN</span>
             <span className="outline">SHTERN</span>
           </h1>
-          <p className="hero-statement">Громкий образ.<br />Честный звук.</p>
         </motion.div>
         <div className="hero-actions">
           <a className="button primary" href="#live">Смотреть live <span>↓</span></a>

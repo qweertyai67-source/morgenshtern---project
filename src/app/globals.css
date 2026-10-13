@@ -172,15 +172,6 @@ button { color: inherit; }
   text-align: center;
 }
 .hero-title .outline { color: transparent; -webkit-text-stroke: clamp(1px, .15vw, 3px) var(--white); }
-.hero-statement {
-  position: absolute;
-  right: 6vw;
-  top: calc(100% + 22px);
-  margin: 0;
-  font: italic 700 clamp(18px, 2.2vw, 34px)/.95 Georgia, serif;
-  color: var(--signal);
-  transform: rotate(-5deg);
-}
 .hero-actions { position: absolute; left: 3vw; bottom: 72px; display: flex; gap: 10px; z-index: 4; }
 .button {
   min-height: 52px;
@@ -443,7 +434,6 @@ footer { padding: 70px 3vw 24px; overflow: hidden; }
   .hero-caption { left: 18px; right: 18px; }
   .hero-orb { width: 75vw; }
   .hero-title { font-size: 19vw; }
-  .hero-statement { right: 1vw; top: calc(100% + 16px); font-size: 19px; }
   .hero-actions { left: 18px; right: 18px; display: grid; grid-template-columns: 1fr; bottom: 75px; }
   .hero-actions .ghost { display: none; }
   .button { min-height: 48px; }
