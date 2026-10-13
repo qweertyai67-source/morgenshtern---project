@@ -265,7 +265,19 @@ button { color: inherit; }
 .release-content > p { max-width: 620px; font-size: clamp(18px, 1.6vw, 25px); line-height: 1.35; }
 .release-buttons { margin-top: 42px; display: flex; align-items: center; gap: 26px; flex-wrap: wrap; }
 .text-link { font-size: 12px; font-weight: 900; text-transform: uppercase; border-bottom: 1px solid currentColor; padding-bottom: 5px; }
-.video-shell { position: absolute; width: min(66vw, 1020px); aspect-ratio: 16/9; right: 4vw; bottom: -12vw; border: 12px solid var(--ink); background: var(--ink); box-shadow: 0 35px 80px rgba(0,0,0,.45); }
+.video-shell {
+  position: relative;
+  grid-column: 1 / -1;
+  justify-self: end;
+  width: min(66vw, 1020px);
+  aspect-ratio: 16/9;
+  margin-top: calc(clamp(48px, 4vw, 72px) - 300px);
+  margin-right: 4vw;
+  margin-bottom: -12vw;
+  border: 12px solid var(--ink);
+  background: var(--ink);
+  box-shadow: 0 35px 80px rgba(0,0,0,.45);
+}
 .video-shell iframe, .spotify-shell iframe { width: 100%; height: 100%; border: 0; }
 
 .music { padding-top: clamp(240px, 24vw, 430px); }
@@ -379,10 +391,10 @@ footer { padding: 70px 3vw 24px; overflow: hidden; }
   .hero-actions { bottom: 82px; }
   .manifesto-grid, .city-signal, .contact-section, .newsletter { grid-template-columns: 1fr; }
   .manifesto-grid { gap: 45px; }
-  .release-section { grid-template-columns: 1fr; padding-bottom: 35vw; }
+  .release-section { grid-template-columns: 1fr; padding-bottom: 0; }
   .release-visual { min-height: 72vh; }
   .release-content { padding-bottom: 90px; }
-  .video-shell { width: 88vw; right: 6vw; bottom: -25vw; }
+  .video-shell { width: 88vw; margin-top: calc(clamp(28px, 6vw, 48px) - 90px); margin-right: 6vw; margin-bottom: -25vw; }
   .music { padding-top: 38vw; }
   .section-heading, .tour-heading { grid-template-columns: 1fr; gap: 26px; }
   .release-grid { grid-template-columns: 1fr; }
@@ -418,7 +430,7 @@ footer { padding: 70px 3vw 24px; overflow: hidden; }
   .salt-disc { width: 78%; }
   .release-content { padding: 80px 20px 70px; }
   .release-content h2 { font-size: 18vw; }
-  .video-shell { border-width: 6px; bottom: -28vw; }
+  .video-shell { margin-top: -42px; margin-bottom: -28vw; border-width: 6px; }
   .music { padding-top: 42vw; }
   .release-grid { margin-top: 54px; }
   .release-card { padding: 18px; }
